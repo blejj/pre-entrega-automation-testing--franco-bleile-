@@ -26,11 +26,15 @@ def login(driver, username="standard_user", password="secret_sauce"):
 def take_screenshot(driver, test_name):
     folder = "reports/screenshots"
 
-    if not os.path.exists(folder):
-        os.makedirs(folder)
+    os.makedirs(folder, exist_ok=True)
 
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
-    file_path = f"{folder}/{test_name}_{timestamp}.png"
+    file_path = os.path.join(
+        folder,
+        f"{test_name}_{timestamp}.png"
+    )
 
     driver.save_screenshot(file_path)
+
+    print(f"Screenshot guardada en: {file_path}")
